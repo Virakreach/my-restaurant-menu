@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Golden Fork | Menu & Reservations</title>
+    <style>
+        :root {
+            --primary: #d4a373;
+            --dark: #1a1a1a;
+            --light: #fefae0;
+            --white: #ffffff;
+            --text: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1200');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 10px auto;
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .menu-item {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-8px);
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .menu-content { padding: 1.5rem; }
+
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .price { color: var(--primary); }
+
+        /* Reservation Form */
+        .reservation-box {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #bc8a5f; }
+
+        footer {
+            background: var(--dark);
+            color: #999;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>THE GOLDEN FORK</h1>
+        <p>Premium Culinary Experience</p>
+    </header>
+
+    <div class="container">
+        
+        <h2>Chef's Selection</h2>
+        <div class="menu-grid">
+            <div class="menu-item">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" class="menu-image">
+                <div class="menu-content">
+                    <div class="menu-header"><span>Quinoa Power Bowl</span><span class="price">$16</span></div>
+                    <p>Avocado, sweet potato, and citrus vinaigrette.</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500" class="menu-image">
+                <div class="menu-content">
+                    <div class="menu-header"><span>Seared Ribeye</span><span class="price">$38</span></div>
+                    <p>Hand-cut fries, truffle butter, and garlic beans.</p>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500" class="menu-image">
+                <div class="menu-content">
+                    <div class="menu-header"><span>Artisan Pizza</span><span class="price">$22</span></div>
+                    <p>Wild mushrooms, goat cheese, and fresh arugula.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Book a Table</h2>
+        <div class="reservation-box">
+            <form action="#">
+                <div class="form-grid">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="date" required>
+                    <select required>
+                        <option value="">Number of Guests</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 People</option>
+                        <option value="4">4 People</option>
+                        <option value="6">6+ People</option>
+                    </select>
+                    <textarea placeholder="Special Requests (Allergies, Birthdays...)" class="full-width" rows="4"></textarea>
+                    <button type="submit" class="full-width">Confirm Reservation</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>123 Gastronomy Lane, Foodie City<br>Open Daily: 11:00 AM - 10:00 PM</p>
+        <p style="margin-top: 1rem;">&copy; 2026 The Golden Fork</p>
+    </footer>
+
+</body>
+</html>
