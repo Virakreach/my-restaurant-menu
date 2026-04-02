@@ -53,6 +53,7 @@
             margin: 10px auto;
         }
 
+        /* The Grid where items will appear */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -151,29 +152,7 @@
     <div class="container">
         
         <h2>Chef's Selection</h2>
-        <div class="menu-grid">
-            <div class="menu-item">
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" class="menu-image" alt="Bowl">
-                <div class="menu-content">
-                    <div class="menu-header"><span>Quinoa Power Bowl</span><span class="price">$16</span></div>
-                    <p>Avocado, sweet potato, and citrus vinaigrette.</p>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500" class="menu-image" alt="Steak">
-                <div class="menu-content">
-                    <div class="menu-header"><span>Seared Ribeye</span><span class="price">$38</span></div>
-                    <p>Hand-cut fries, truffle butter, and garlic beans.</p>
-                </div>
-            </div>
-            <div class="menu-item">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500" class="menu-image" alt="Pizza">
-                <div class="menu-content">
-                    <div class="menu-header"><span>Artisan Pizza</span><span class="price">$22</span></div>
-                    <p>Wild mushrooms, goat cheese, and fresh arugula.</p>
-                </div>
-            </div>
-        </div>
+        <div class="menu-grid" id="menu-list"></div>
 
         <h2>Book a Table</h2>
         <div class="reservation-box">
@@ -201,6 +180,50 @@
         <p>123 Gastronomy Lane, Foodie City<br>Open Daily: 11:00 AM - 10:00 PM</p>
         <p style="margin-top: 1rem;">&copy; 2026 The Golden Fork</p>
     </footer>
+
+    <script>
+        // You can add more items to this list easily!
+        const menuData = [
+            {
+                name: "Quinoa Power Bowl",
+                price: "$16",
+                desc: "Avocado, sweet potato, and citrus vinaigrette.",
+                img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500"
+            },
+            {
+                name: "Seared Ribeye",
+                price: "$38",
+                desc: "Hand-cut fries, truffle butter, and garlic beans.",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500"
+            },
+            {
+                name: "Artisan Pizza",
+                price: "$22",
+                desc: "Wild mushrooms, goat cheese, and fresh arugula.",
+                img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500"
+            }
+        ];
+
+        const menuList = document.getElementById('menu-list');
+
+        // Function to create the menu items
+        function displayMenu() {
+            menuList.innerHTML = menuData.map(item => `
+                <div class="menu-item">
+                    <img src="${item.img}" class="menu-image" alt="${item.name}">
+                    <div class="menu-content">
+                        <div class="menu-header">
+                            <span>${item.name}</span>
+                            <span class="price">${item.price}</span>
+                        </div>
+                        <p>${item.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        displayMenu();
+    </script>
 
 </body>
 </html>
