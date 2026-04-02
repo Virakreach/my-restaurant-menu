@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Golden Fork | Menu & Reservations</title>
+    <title>The Golden Fork | Live Menu</title>
     <style>
         :root {
             --primary: #d4a373;
@@ -53,7 +53,6 @@
             margin: 10px auto;
         }
 
-        /* The Grid where items will appear */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -75,6 +74,7 @@
             width: 100%;
             height: 220px;
             object-fit: cover;
+            background-color: #eee;
         }
 
         .menu-content { padding: 1.5rem; }
@@ -152,7 +152,8 @@
     <div class="container">
         
         <h2>Chef's Selection</h2>
-        <div class="menu-grid" id="menu-list"></div>
+        <div class="menu-grid" id="menu-list">
+            </div>
 
         <h2>Book a Table</h2>
         <div class="reservation-box">
@@ -168,7 +169,7 @@
                         <option value="4">4 People</option>
                         <option value="6">6+ People</option>
                     </select>
-                    <textarea name="message" placeholder="Special Requests (Allergies, Birthdays...)" class="full-width" rows="4"></textarea>
+                    <textarea name="message" placeholder="Special Requests" class="full-width" rows="4"></textarea>
                     <button type="submit" class="full-width">Confirm Reservation</button>
                 </div>
             </form>
@@ -182,47 +183,47 @@
     </footer>
 
     <script>
-        // You can add more items to this list easily!
-        const menuData = [
-            {
-                name: "Quinoa Power Bowl",
-                price: "$16",
-                desc: "Avocado, sweet potato, and citrus vinaigrette.",
-                img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500"
-            },
-            {
-                name: "Seared Ribeye",
-                price: "$38",
-                desc: "Hand-cut fries, truffle butter, and garlic beans.",
-                img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500"
-            },
-            {
-                name: "Artisan Pizza",
-                price: "$22",
-                desc: "Wild mushrooms, goat cheese, and fresh arugula.",
-                img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500"
-            }
-        ];
+        const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxbtpBebao6Vex9tqtX4P087UlW6tt_jRNEhokN7vZBMS-jQDEi806T18NhmHOaWZ6jD0ZpIaDW42q/pub?output=csv';
 
-        const menuList = document.getElementById('menu-list');
+        async function loadMenu() {
+            try {
+                const response = await fetch(sheetUrl);
+                const data = await response.text();
+                
+                // Split rows and skip the header
+                const rows = data.split('\n').slice(1);
+                const menuList = document.getElementById('menu-list');
+                
+                menuList.innerHTML = rows.map(row => {
+                    // Split the columns
+                    const columns = row.split(',');
+                    if (columns.length < 4) return ''; // Skip empty rows
 
-        // Function to create the menu items
-        function displayMenu() {
-            menuList.innerHTML = menuData.map(item => `
-                <div class="menu-item">
-                    <img src="${item.img}" class="menu-image" alt="${item.name}">
-                    <div class="menu-content">
-                        <div class="menu-header">
-                            <span>${item.name}</span>
-                            <span class="price">${item.price}</span>
+                    const name = columns[0].trim();
+                    const price = columns[1].trim();
+                    const desc = columns[2].trim();
+                    const img = columns[3].trim();
+
+                    return `
+                        <div class="menu-item">
+                            <img src="${img}" class="menu-image" alt="${name}" onerror="this.src='https://via.placeholder.com/300x200?text=Food+Image'">
+                            <div class="menu-content">
+                                <div class="menu-header">
+                                    <span>${name}</span>
+                                    <span class="price">${price}</span>
+                                </div>
+                                <p>${desc}</p>
+                            </div>
                         </div>
-                        <p>${item.desc}</p>
-                    </div>
-                </div>
-            `).join('');
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error("Error loading menu:", error);
+                document.getElementById('menu-list').innerHTML = "<p>Error loading menu. Please check the spreadsheet publication.</p>";
+            }
         }
 
-        displayMenu();
+        loadMenu();
     </script>
 
 </body>
