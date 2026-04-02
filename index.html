@@ -6,7 +6,7 @@
     <title>The Golden Fork | Live Menu & Reservations</title>
     <style>
         :root {
-            --primary: #d4a373; /* Gold/Tan Theme */
+            --primary: #d4a373;
             --dark: #1a1a1a;
             --light: #fefae0;
             --white: #ffffff;
@@ -68,7 +68,6 @@
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1rem;
             transition: 0.3s;
         }
 
@@ -117,7 +116,7 @@
         /* Reservation Section */
         .reservation-box {
             background: var(--white);
-            padding: 3.5rem;
+            padding: 3rem;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             margin-top: 3rem;
@@ -126,7 +125,7 @@
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.8rem;
+            gap: 1.5rem;
         }
 
         input, select, textarea {
@@ -136,7 +135,26 @@
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 1rem;
-            outline-color: var(--primary);
+        }
+
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
 
         .full-width { grid-column: span 2; }
@@ -164,11 +182,9 @@
             margin-top: 6rem;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
-            header { padding: 3rem 1rem; }
         }
     </style>
 </head>
@@ -176,17 +192,17 @@
 
     <header>
         <h1>THE GOLDEN FORK</h1>
-        <p>A Taste of Excellence, Updated Live</p>
+        <p>Premium Drinks & Dining Experience</p>
     </header>
 
     <div class="container">
         
-        <h2>Explore Our Menu</h2>
+        <h2>Our Menu</h2>
 
         <div class="filter-container">
-            <button class="filter-btn active" onclick="filterMenu('All', this)">Full Menu</button>
-            <button class="filter-btn" onclick="filterMenu('Food', this)">Delicious Food</button>
-            <button class="filter-btn" onclick="filterMenu('Drink', this)">Refreshing Drinks</button>
+            <button class="filter-btn active" onclick="filterMenu('All', this)">All</button>
+            <button class="filter-btn" onclick="filterMenu('Food', this)">Food</button>
+            <button class="filter-btn" onclick="filterMenu('Drink', this)">Drink</button>
         </div>
 
         <div class="menu-grid" id="menu-list">
@@ -194,22 +210,44 @@
 
         <hr style="border: 0; border-top: 1px solid #ddd; margin: 4rem 0;">
 
-        <h2>Reserve Your Table</h2>
+        <h2>Book Your Table</h2>
         <div class="reservation-box">
             <form action="https://formspree.io/f/xojpndea" method="POST">
                 <div class="form-grid">
-                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="text" name="customer_name" placeholder="Full Name" required>
                     <input type="email" name="email" placeholder="Email Address" required>
-                    <input type="date" name="reservation_date" required>
-                    <select name="guests" required>
-                        <option value="">How many guests?</option>
-                        <option value="1">1 Person</option>
-                        <option value="2">2 People</option>
-                        <option value="4">4 People</option>
-                        <option value="6">6+ People</option>
+
+                    <select name="table_number" required>
+                        <option value="">Select Table Number</option>
+                        <option value="T1">Table 01 - Window View</option>
+                        <option value="T2">Table 02 - Cozy Corner</option>
+                        <option value="T3">Table 03 - Garden Terrace</option>
+                        <option value="T4">Table 04 - VIP Lounge</option>
                     </select>
-                    <textarea name="requests" placeholder="Any special requests? (Birthdays, Allergies...)" class="full-width" rows="4"></textarea>
-                    <button type="submit" class="submit-btn full-width">Confirm My Booking</button>
+
+                    <select name="reservation_time" required>
+                        <option value="">Select Time Slot</option>
+                        <option value="11:00 AM">11:00 AM (Brunch)</option>
+                        <option value="2:00 PM">02:00 PM (Lunch)</option>
+                        <option value="6:00 PM">06:00 PM (Dinner)</option>
+                        <option value="8:00 PM">08:00 PM (Late Night)</option>
+                    </select>
+
+                    <div class="full-width">
+                        <p style="margin-bottom: 5px; font-weight: bold;">I am interested in:</p>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="interest[]" value="Food"> Food
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="interest[]" value="Drink"> Drink
+                            </label>
+                        </div>
+                    </div>
+
+                    <textarea name="notes" placeholder="Special Requests or Allergies..." class="full-width" rows="3"></textarea>
+                    
+                    <button type="submit" class="submit-btn full-width">Confirm Reservation</button>
                 </div>
             </form>
         </div>
@@ -217,9 +255,8 @@
     </div>
 
     <footer>
-        <p><strong>The Golden Fork Restaurant</strong></p>
-        <p>123 Gastronomy Lane, Culinary City<br>Open Daily: 11:00 AM - 10:00 PM</p>
-        <p style="margin-top: 1.5rem; font-size: 0.8rem;">&copy; 2026 Crafted by Virakreach</p>
+        <p><strong>The Golden Fork</strong></p>
+        <p>Crafted by Virakreach &copy; 2026</p>
     </footer>
 
     <script>
@@ -230,46 +267,40 @@
             try {
                 const response = await fetch(sheetUrl);
                 const csvData = await response.text();
-                
-                // Process CSV rows
-                const rows = csvData.split('\n').slice(1); // Skip Header Row
+                const rows = csvData.split('\n').slice(1);
                 
                 allItems = rows.map(row => {
                     const columns = row.split(',');
-                    if (columns.length < 4) return null; // Avoid empty rows
-
+                    if (columns.length < 4) return null;
                     return {
                         name: columns[0].trim(),
                         price: columns[1].trim(),
                         description: columns[2].trim(),
                         image: columns[3].trim(),
-                        category: columns[4] ? columns[4].trim() : 'Food' // Get Category from Column E
+                        category: columns[4] ? columns[4].trim() : 'Food'
                     };
                 }).filter(item => item !== null);
 
-                filterMenu('All'); // Initial display
+                filterMenu('All');
             } catch (err) {
-                console.error("Fetch Error:", err);
-                document.getElementById('menu-list').innerHTML = "<p style='text-align:center;'>Unable to load menu. Please check connection.</p>";
+                console.error(err);
             }
         }
 
-        function filterMenu(category, btnElement) {
+        function filterMenu(category, btn) {
             const list = document.getElementById('menu-list');
-            
-            // Manage active button class
-            if (btnElement) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                btnElement.classList.add('active');
+            if (btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
             }
 
-            const filteredData = category === 'All' 
+            const filtered = category === 'All' 
                 ? allItems 
                 : allItems.filter(item => item.category.toLowerCase() === category.toLowerCase());
 
-            list.innerHTML = filteredData.map(item => `
+            list.innerHTML = filtered.map(item => `
                 <div class="menu-item">
-                    <img src="${item.image}" class="menu-image" alt="${item.name}" onerror="this.src='https://via.placeholder.com/400x300?text=Food+Image'">
+                    <img src="${item.image}" class="menu-image" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Menu+Item'">
                     <div class="menu-content">
                         <div class="menu-header">
                             <span>${item.name}</span>
@@ -281,9 +312,7 @@
             `).join('');
         }
 
-        // Start loading the menu
         fetchMenu();
     </script>
-
 </body>
 </html>
