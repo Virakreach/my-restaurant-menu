@@ -53,7 +53,6 @@
             margin: 10px auto;
         }
 
-        /* Menu Grid */
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -69,9 +68,7 @@
             transition: 0.3s;
         }
 
-        .menu-item:hover {
-            transform: translateY(-8px);
-        }
+        .menu-item:hover { transform: translateY(-8px); }
 
         .menu-image {
             width: 100%;
@@ -91,7 +88,6 @@
 
         .price { color: var(--primary); }
 
-        /* Reservation Form */
         .reservation-box {
             background: var(--white);
             padding: 3rem;
@@ -157,21 +153,21 @@
         <h2>Chef's Selection</h2>
         <div class="menu-grid">
             <div class="menu-item">
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" class="menu-image">
+                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500" class="menu-image" alt="Bowl">
                 <div class="menu-content">
                     <div class="menu-header"><span>Quinoa Power Bowl</span><span class="price">$16</span></div>
                     <p>Avocado, sweet potato, and citrus vinaigrette.</p>
                 </div>
             </div>
             <div class="menu-item">
-                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500" class="menu-image">
+                <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=500" class="menu-image" alt="Steak">
                 <div class="menu-content">
                     <div class="menu-header"><span>Seared Ribeye</span><span class="price">$38</span></div>
                     <p>Hand-cut fries, truffle butter, and garlic beans.</p>
                 </div>
             </div>
             <div class="menu-item">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500" class="menu-image">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500" class="menu-image" alt="Pizza">
                 <div class="menu-content">
                     <div class="menu-header"><span>Artisan Pizza</span><span class="price">$22</span></div>
                     <p>Wild mushrooms, goat cheese, and fresh arugula.</p>
@@ -181,19 +177,19 @@
 
         <h2>Book a Table</h2>
         <div class="reservation-box">
-            <form action="#">
+            <form action="https://formspree.io/f/xojpndea" method="POST">
                 <div class="form-grid">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Email Address" required>
-                    <input type="date" required>
-                    <select required>
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <input type="date" name="date" required>
+                    <select name="guests" required>
                         <option value="">Number of Guests</option>
                         <option value="1">1 Person</option>
                         <option value="2">2 People</option>
                         <option value="4">4 People</option>
                         <option value="6">6+ People</option>
                     </select>
-                    <textarea placeholder="Special Requests (Allergies, Birthdays...)" class="full-width" rows="4"></textarea>
+                    <textarea name="message" placeholder="Special Requests (Allergies, Birthdays...)" class="full-width" rows="4"></textarea>
                     <button type="submit" class="full-width">Confirm Reservation</button>
                 </div>
             </form>
