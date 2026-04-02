@@ -99,6 +99,19 @@
             margin-bottom: 1.5rem;
             border: 2px dashed var(--primary);
         }
+
+        /* Total Price Styling */
+        .total-box {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -162,10 +175,16 @@
         <div id="order-summary" class="selected-items-list">
             <strong>Selected from Menu:</strong> <span id="items-count">None yet</span>
             <ul id="selected-list" style="margin-top: 10px; padding-left: 20px; color: #555;"></ul>
+            
+            <div class="total-box">
+                <span>Estimated Total:</span>
+                <span id="total-price" style="color: var(--accent)">$0.00</span>
+            </div>
         </div>
 
         <form action="https://formspree.io/f/xojpndea" method="POST">
             <input type="hidden" name="ordered_items" id="hidden-items-input">
+            <input type="hidden" name="total_price_confirmed" id="hidden-total-input">
 
             <div class="form-grid">
                 <div>
@@ -264,14 +283,17 @@
                         <span style="color:var(--primary); font-weight:bold">${i.price}</span>
                     </div>
                     <p style="font-size:0.9rem; color:#666; margin:10px 0;">${i.desc}</p>
-                    <button class="add-btn" onclick="addToOrder('${i.name}')">+ Add to My Booking</button>
+                    <button class="add-btn" onclick="addToOrder('${i.name}', '${i.price}')">+ Add to My Booking</button>
                 </div>
             </div>
         `).join('');
     }
 
-    function addToOrder(name) {
-        selectedItems.push(name);
+    // UPDATED FUNCTION: Now tracks price too!
+    function addToOrder(name, priceStr) {
+        // Remove $ sign and convert to number
+        const priceNum = parseFloat(priceStr.replace('$', '')) || 0;
+        selectedItems.push({ name: name, price: priceNum });
         updateUI();
     }
 
@@ -283,20 +305,37 @@
     function updateUI() {
         const list = document.getElementById('selected-list');
         const count = document.getElementById('items-count');
-        const hidden = document.getElementById('hidden-items-input');
+        const totalDisp = document.getElementById('total-price');
+        const hiddenItems = document.getElementById('hidden-items-input');
+        const hiddenTotal = document.getElementById('hidden-total-input');
+
+        let runningTotal = 0;
 
         if(selectedItems.length > 0) {
             count.innerText = `(${selectedItems.length} items)`;
-            list.innerHTML = selectedItems.map((item, i) => `
-                <li style="margin-bottom:5px">
-                    ${item} <button onclick="removeItem(${i})" style="color:red; border:none; background:none; cursor:pointer; font-size:0.8rem">[Remove]</button>
-                </li>
-            `).join('');
-            hidden.value = selectedItems.join(', ');
+            
+            list.innerHTML = selectedItems.map((item, i) => {
+                runningTotal += item.price;
+                return `
+                    <li style="margin-bottom:5px; display:flex; justify-content:space-between">
+                        <span>${item.name} ($${item.price.toFixed(2)})</span>
+                        <button onclick="removeItem(${i})" style="color:red; border:none; background:none; cursor:pointer; font-size:0.8rem">[Remove]</button>
+                    </li>
+                `;
+            }).join('');
+
+            totalDisp.innerText = `$${runningTotal.toFixed(2)}`;
+            
+            // Prepare data for Formspree email
+            hiddenItems.value = selectedItems.map(i => i.name).join(', ');
+            hiddenTotal.value = `$${runningTotal.toFixed(2)}`;
+
         } else {
             count.innerText = "None yet";
             list.innerHTML = "";
-            hidden.value = "";
+            totalDisp.innerText = "$0.00";
+            hiddenItems.value = "";
+            hiddenTotal.value = "$0.00";
         }
     }
 
