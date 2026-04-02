@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Quinoa Power Bowl",
+    "price": "$18",
+    "description": "Avocado, sweet potato, and citrus vinaigrette.",
+    "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500"
+  },
+  {
+    "name": "Seared Ribeye",
+    "price": "$42",
+    "description": "Hand-cut fries, truffle butter, and garlic beans.",
+    "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=500"
+  }
+]
