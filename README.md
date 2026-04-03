@@ -3,8 +3,8 @@
 A modern, responsive restaurant menu and reservation page built with HTML5 and CSS3. 
 
 ## 🚀 Live Demo
-[View the Live Site on Vercel](https://your-project-name.vercel.app) 
-*(Replace the link above with your actual Vercel URL once deployed)*
+(https://my-restaurant-menu-bice.vercel.app/)
+
 
 ## ✨ Features
 - **Responsive Design:** Works on mobile, tablet, and desktop.
